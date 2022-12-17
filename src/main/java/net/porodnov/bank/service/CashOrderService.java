@@ -15,22 +15,21 @@ import net.porodnov.bank.repository.TransactionRepository;
 import net.porodnov.bank.util.SecretWordResolver;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class CashOrderService {
-    private final CustomerRepository customerRepository;
     private final CustomerAccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final CashOrderRepository cashOrderRepository;
 
-    public CashOrderService(CustomerRepository customerRepository,
-                            CustomerAccountRepository accountRepository,
-                            TransactionRepository transactionRepository,
-                            CashOrderRepository cashOrderRepository
+    public CashOrderService(
+            CustomerAccountRepository accountRepository,
+            TransactionRepository transactionRepository,
+            CashOrderRepository cashOrderRepository
     ) {
-        this.customerRepository = customerRepository;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
         this.cashOrderRepository = cashOrderRepository;
@@ -107,6 +106,14 @@ public class CashOrderService {
                 }
             }
         }
+    }
+
+    public List<CashOrder> getInfoBy(Long id) {
+        List<CashOrder> all = cashOrderRepository.findCashOrderByCustomerAccountId(id);
+        if (all.isEmpty()) {
+            throw new EntityNotFoundException("Кассовый ордер не существует");
+        }
+        return all;
     }
 
 }

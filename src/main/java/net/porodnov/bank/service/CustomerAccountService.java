@@ -1,7 +1,9 @@
 package net.porodnov.bank.service;
 
+import net.porodnov.bank.dto.CustomerAccountDto;
 import net.porodnov.bank.dto.TransferAccountDto;
 import net.porodnov.bank.dto.InterbankTransferDto;
+import net.porodnov.bank.entity.CashOrder;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
@@ -9,6 +11,7 @@ import net.porodnov.bank.enums.AccountType;
 import net.porodnov.bank.enums.ExecutionResult;
 import net.porodnov.bank.enums.TransactionType;
 import net.porodnov.bank.exception.SecretWordException;
+import net.porodnov.bank.repository.CashOrderRepository;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.CustomerRepository;
 import net.porodnov.bank.util.SecretWordResolver;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -26,13 +30,17 @@ public class CustomerAccountService {
     private final TransactionService transactionService;
     private final CustomerRepository customerRepository;
 
+    private final CashOrderRepository cashOrderRepository;
+
     public CustomerAccountService(CustomerAccountRepository customerAccountRepository,
                                   TransactionService transactionService,
-                                  CustomerRepository customerRepository
+                                  CustomerRepository customerRepository,
+                                  CashOrderRepository cashOrderRepository
     ) {
         this.customerAccountRepository = customerAccountRepository;
         this.transactionService = transactionService;
         this.customerRepository = customerRepository;
+        this.cashOrderRepository = cashOrderRepository;
     }
 
     public void createTransferAccount(TransferAccountDto transfer, Long id) throws SecretWordException {
@@ -104,10 +112,9 @@ public class CustomerAccountService {
             account.setCustomer(customerById);
             account.setValidityOfAccount(LocalDateTime.now());
             account.setOpeningDate(LocalDateTime.now());
-            account.setAccountNumber(String.valueOf(Math.round(Math.random() * 1000000000))); // вместо хард кода
+            account.setAccountNumber(String.valueOf(Math.round(Math.random() * 1000000000)));
             account.setSum(Float.valueOf(String.valueOf(Math.round(Math.random() * 1000))));
             customerAccountRepository.save(account);
         } else throw new EntityNotFoundException("Клиент не найди по id: " + id);
     }
-
 }
