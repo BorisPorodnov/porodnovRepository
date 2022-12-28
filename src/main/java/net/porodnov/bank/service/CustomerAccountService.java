@@ -1,9 +1,7 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.dto.CustomerAccountDto;
-import net.porodnov.bank.dto.TransferAccountDto;
 import net.porodnov.bank.dto.InterbankTransferDto;
-import net.porodnov.bank.entity.CashOrder;
+import net.porodnov.bank.dto.TransferAccountDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
@@ -11,7 +9,6 @@ import net.porodnov.bank.enums.AccountType;
 import net.porodnov.bank.enums.ExecutionResult;
 import net.porodnov.bank.enums.TransactionType;
 import net.porodnov.bank.exception.SecretWordException;
-import net.porodnov.bank.repository.CashOrderRepository;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.CustomerRepository;
 import net.porodnov.bank.util.SecretWordResolver;
@@ -20,7 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -30,17 +27,13 @@ public class CustomerAccountService {
     private final TransactionService transactionService;
     private final CustomerRepository customerRepository;
 
-    private final CashOrderRepository cashOrderRepository;
-
     public CustomerAccountService(CustomerAccountRepository customerAccountRepository,
                                   TransactionService transactionService,
-                                  CustomerRepository customerRepository,
-                                  CashOrderRepository cashOrderRepository
+                                  CustomerRepository customerRepository
     ) {
         this.customerAccountRepository = customerAccountRepository;
         this.transactionService = transactionService;
         this.customerRepository = customerRepository;
-        this.cashOrderRepository = cashOrderRepository;
     }
 
     public void createTransferAccount(TransferAccountDto transfer, Long id) throws SecretWordException {
@@ -69,8 +62,14 @@ public class CustomerAccountService {
 
     public void createTransfer(InterbankTransferDto interbankTransferDto) throws SecretWordException {
         Transaction transaction = new Transaction();
-        Map<String, CustomerAccount> map = customerAccountRepository.findAll()
-                .stream().collect(Collectors.toMap(CustomerAccount::getAccountNumber, customerAccount -> customerAccount));
+
+        Map<String, CustomerAccount> map = new HashMap<>();
+
+        for (CustomerAccount customerAccount : customerAccountRepository.findAll()) {
+            if (map.put(customerAccount.getAccountNumber(), customerAccount) != null) {
+                throw new IllegalStateException("Duplicate key");
+            }
+        }
 
         CustomerAccount from = map.get(interbankTransferDto.getFrom().getAccountNumber());
         CustomerAccount to = map.get(interbankTransferDto.getTo().getAccountNumber());

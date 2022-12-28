@@ -4,6 +4,7 @@ import net.porodnov.bank.enums.AccountType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class CustomerAccount {
@@ -82,4 +83,16 @@ public class CustomerAccount {
         this.validityOfAccount = validityOfAccount;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CustomerAccount)) return false;
+        CustomerAccount account = (CustomerAccount) o;
+        return Objects.equals(getId(), account.getId()) && Objects.equals(getCustomer(), account.getCustomer()) && Objects.equals(getAccountNumber(), account.getAccountNumber()) && Objects.equals(getSum(), account.getSum()) && getAccountType() == account.getAccountType() && Objects.equals(getOpeningDate(), account.getOpeningDate()) && Objects.equals(getValidityOfAccount(), account.getValidityOfAccount());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCustomer(), getAccountNumber(), getSum(), getAccountType(), getOpeningDate(), getValidityOfAccount());
+    }
 }
