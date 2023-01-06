@@ -1,5 +1,6 @@
 package net.porodnov.bank.controller;
 
+import net.porodnov.bank.aspect.LogExecutionTime;
 import net.porodnov.bank.dto.CustomerRequestDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.repository.CustomerRepository;
@@ -22,6 +23,7 @@ public class CustomerController {
         this.customerRepository = customerRepository;
     }
 
+    @LogExecutionTime
     @PostMapping("/create")
     public void create(@RequestBody CustomerRequestDto dto) {
         customerService.create(dto);
