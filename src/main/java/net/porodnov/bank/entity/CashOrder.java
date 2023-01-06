@@ -1,7 +1,7 @@
 package net.porodnov.bank.entity;
 
-import net.porodnov.bank.enums.ExecutionResult;
-import net.porodnov.bank.enums.OrderType;
+import net.porodnov.bank.entity.enums.ExecutionResult;
+import net.porodnov.bank.entity.enums.OrderType;
 
 import javax.persistence.*;
 import java.time.LocalDate;

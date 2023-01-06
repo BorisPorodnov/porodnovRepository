@@ -1,7 +1,7 @@
 package net.porodnov.bank.dto;
 
 import net.porodnov.bank.entity.Customer;
-import net.porodnov.bank.enums.AccountType;
+import net.porodnov.bank.entity.enums.AccountType;
 
 import java.time.LocalDateTime;
 

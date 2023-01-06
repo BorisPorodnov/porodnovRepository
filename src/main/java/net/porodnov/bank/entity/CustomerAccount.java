@@ -1,6 +1,6 @@
 package net.porodnov.bank.entity;
 
-import net.porodnov.bank.enums.AccountType;
+import net.porodnov.bank.entity.enums.AccountType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

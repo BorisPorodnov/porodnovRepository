@@ -3,7 +3,7 @@ package net.porodnov.bank.service;
 import net.porodnov.bank.dto.CustomerRequestDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
-import net.porodnov.bank.enums.AccountType;
+import net.porodnov.bank.entity.enums.AccountType;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.CustomerRepository;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package net.porodnov.bank.enums;
+package net.porodnov.bank.entity.enums;
 
 public enum TransactionType {
     REPLENISHMENT, // Пополнение

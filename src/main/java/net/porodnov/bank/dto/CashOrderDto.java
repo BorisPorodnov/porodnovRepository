@@ -1,8 +1,8 @@
 package net.porodnov.bank.dto;
 
 import net.porodnov.bank.entity.CustomerAccount;
-import net.porodnov.bank.enums.ExecutionResult;
-import net.porodnov.bank.enums.OrderType;
+import net.porodnov.bank.entity.enums.ExecutionResult;
+import net.porodnov.bank.entity.enums.OrderType;
 
 import java.time.LocalDate;
 
