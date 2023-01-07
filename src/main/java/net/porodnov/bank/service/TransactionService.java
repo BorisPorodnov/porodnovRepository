@@ -1,6 +1,6 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.dto.TransferAccountDto;
+import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
 import net.porodnov.bank.entity.enums.ExecutionResult;
@@ -20,7 +20,10 @@ public class TransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    public void creteTransaction(TransferAccountDto transfer, Transaction createTransaction, Map<String, CustomerAccount> accountMap) {
+    public void creteTransaction(TransferAccountDto transfer,
+                                 Transaction createTransaction,
+                                 Map<String, CustomerAccount> accountMap
+    ) {
         CustomerAccount fromAccount = accountMap.get(transfer.getCurrentAccountNumber());
         CustomerAccount toAccount = accountMap.get(transfer.getSavingAccountNumber());
         fromAccount.setSum(fromAccount.getSum() - transfer.getSumTransfer());

@@ -1,6 +1,6 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.dto.CashOrderDto;
+import net.porodnov.bank.entity.dto.CashOrderDto;
 import net.porodnov.bank.entity.CashOrder;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;

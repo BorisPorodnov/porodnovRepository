@@ -1,11 +1,15 @@
 package net.porodnov.bank.entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.porodnov.bank.entity.enums.ExecutionResult;
 import net.porodnov.bank.entity.enums.TransactionType;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Getter
+@Setter
 @Entity
 public class Transaction {
     @Id
@@ -33,69 +37,5 @@ public class Transaction {
     private ExecutionResult executionResult;
 
     public Transaction() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public CustomerAccount getCustomerAccount() {
-        return customerAccount;
-    }
-
-    public void setCustomerAccount(CustomerAccount customerAccount) {
-        this.customerAccount = customerAccount;
-    }
-
-    public CashOrder getCashOrder() {
-        return cashOrder;
-    }
-
-    public void setCashOrder(CashOrder cashOrder) {
-        this.cashOrder = cashOrder;
-    }
-
-    public CustomerAccount getCustomerAccountTransfer() {
-        return customerAccountTransfer;
-    }
-
-    public void setCustomerAccountTransfer(CustomerAccount customerAccountTransfer) {
-        this.customerAccountTransfer = customerAccountTransfer;
-    }
-
-    public LocalDate getTransactionCreationDate() {
-        return transactionCreationDate;
-    }
-
-    public void setTransactionCreationDate(LocalDate transactionCreationDate) {
-        this.transactionCreationDate = transactionCreationDate;
-    }
-
-    public Float getSumTransaction() {
-        return sumTransaction;
-    }
-
-    public void setSumTransaction(Float sumTransaction) {
-        this.sumTransaction = sumTransaction;
-    }
-
-    public TransactionType getTransactionType() {
-        return transactionType;
-    }
-
-    public void setTransactionType(TransactionType transactionType) {
-        this.transactionType = transactionType;
-    }
-
-    public ExecutionResult getExecutionResult() {
-        return executionResult;
-    }
-
-    public void setExecutionResult(ExecutionResult executionResult) {
-        this.executionResult = executionResult;
     }
 }

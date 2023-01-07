@@ -1,6 +1,6 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.dto.CustomerRequestDto;
+import net.porodnov.bank.entity.dto.CustomerRequestDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.enums.AccountType;

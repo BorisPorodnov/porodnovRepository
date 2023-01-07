@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CashOrderRepository extends JpaRepository<CashOrder, Long> {
-    CashOrder findCashOrderById(Long id);
     List<CashOrder>findCashOrderByCustomerAccountId(Long id);
 }

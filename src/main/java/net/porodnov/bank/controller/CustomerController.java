@@ -1,7 +1,7 @@
 package net.porodnov.bank.controller;
 
 import net.porodnov.bank.aspect.LogExecutionTime;
-import net.porodnov.bank.dto.CustomerRequestDto;
+import net.porodnov.bank.entity.dto.CustomerRequestDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.repository.CustomerRepository;
 import net.porodnov.bank.service.CustomerService;

@@ -1,7 +1,7 @@
 package net.porodnov.bank.controller;
 
-import net.porodnov.bank.dto.InterbankTransferDto;
-import net.porodnov.bank.dto.TransferAccountDto;
+import net.porodnov.bank.entity.dto.InterbankTransferDto;
+import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.exception.SecretWordException;
 import net.porodnov.bank.repository.CustomerAccountRepository;
