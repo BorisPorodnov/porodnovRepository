@@ -16,7 +16,7 @@
             <column name="second_name" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="sur_name" type="varchar(50)">
+            <column name="surname" type="varchar(50)">
                 <constraints nullable="false"/>
             </column>
             <column name="secret_word" type="varchar(255)">

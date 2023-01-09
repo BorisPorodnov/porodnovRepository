@@ -17,6 +17,16 @@ public class CashOrderDto {
     private ExecutionResult executionResult;
     private LocalDate dateCreation;
 
-    public CashOrderDto() {
+    public CashOrderDto(OrderType orderType,
+                        Float sum,
+                        CustomerAccount customerAccount,
+                        ExecutionResult executionResult,
+                        LocalDate dateCreation
+    ) {
+        this.orderType = orderType;
+        this.sum = sum;
+        this.customerAccount = customerAccount;
+        this.executionResult = executionResult;
+        this.dateCreation = dateCreation;
     }
 }

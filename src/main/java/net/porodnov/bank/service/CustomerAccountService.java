@@ -1,10 +1,10 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.entity.dto.InterbankTransferDto;
-import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
+import net.porodnov.bank.entity.dto.InterbankTransferDto;
+import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.entity.enums.AccountType;
 import net.porodnov.bank.entity.enums.ExecutionResult;
 import net.porodnov.bank.entity.enums.TransactionType;
@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,7 +112,7 @@ public class CustomerAccountService {
             account.setCustomer(customerById);
             account.setValidityOfAccount(LocalDateTime.now());
             account.setOpeningDate(LocalDateTime.now());
-            account.setAccountNumber(String.valueOf(Math.round(Math.random() * 1000000000)));
+            account.setAccountNumber(UUID.randomUUID().toString());
             account.setSum(Float.valueOf(String.valueOf(Math.round(Math.random() * 1000))));
             customerAccountRepository.save(account);
         } else throw new EntityNotFoundException("Клиент не найди по id: " + id);

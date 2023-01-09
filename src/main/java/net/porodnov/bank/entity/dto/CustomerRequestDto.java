@@ -9,7 +9,7 @@ import net.porodnov.bank.util.SecretWordResolver;
 public class CustomerRequestDto {
     private String firstName;
     private String secondName;
-    private String surName;
+    private String surname;
     private String secretWord;
 
     public CustomerRequestDto() {

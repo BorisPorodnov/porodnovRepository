@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CashOrderService {
@@ -89,12 +90,14 @@ public class CashOrderService {
                 } else if (orderDto.getOrderType() == OrderType.REPLENISHMENT) {
                     account.setSum(account.getSum() + orderDto.getSum());
                     accountRepository.save(account);
+
                     order.setOrderType(orderDto.getOrderType());
                     order.setDateCreation(LocalDate.now());
                     order.setSum(orderDto.getSum());
                     order.setCustomerAccount(account);
                     order.setExecutionResult(ExecutionResult.SUCCESSFULLY);
                     cashOrderRepository.save(order);
+
                     transaction.setSumTransaction(account.getSum());
                     transaction.setTransactionCreationDate(LocalDate.now());
                     transaction.setCashOrder(order);
@@ -107,12 +110,12 @@ public class CashOrderService {
         }
     }
 
-    public List<CashOrder> getInfoBy(Long id) {
+    public List<CashOrderDto> getInfoBy(Long id) {
         List<CashOrder> all = cashOrderRepository.findCashOrderByCustomerAccountId(id);
         if (all.isEmpty()) {
             throw new EntityNotFoundException("Кассовый ордер не существует");
         }
-        return all;
+        return all.stream().map(CashOrder::toCashOrderResponseDto).collect(Collectors.toList());
     }
 
 }

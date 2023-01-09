@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 public class CustomerAccountDto {
     private Long id;
     private Customer customer;
-
     private String accountNumber;
     private Float sum;
     private AccountType accountType;

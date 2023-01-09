@@ -1,7 +1,6 @@
 package net.porodnov.bank.controller;
 
 import net.porodnov.bank.entity.dto.CashOrderDto;
-import net.porodnov.bank.entity.CashOrder;
 import net.porodnov.bank.exception.SecretWordException;
 import net.porodnov.bank.service.CashOrderService;
 import org.springframework.http.HttpStatus;
@@ -32,7 +31,7 @@ public class CashOrderController {
     }
 
     @GetMapping("/info/{id}")
-    ResponseEntity<List<CashOrder>> getInfoCashOrdersByAccount(@PathVariable Long id) {
+    ResponseEntity<List<CashOrderDto>> getInfoCashOrdersByAccount(@PathVariable Long id) {
         return ResponseEntity.ok(cashOrderService.getInfoBy(id));
     }
 }

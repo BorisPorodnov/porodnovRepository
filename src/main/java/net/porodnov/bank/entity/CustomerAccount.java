@@ -17,11 +17,9 @@ public class CustomerAccount {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
     private String accountNumber;
     private Float sum;
     @Enumerated(EnumType.STRING)

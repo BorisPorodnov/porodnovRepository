@@ -2,6 +2,7 @@ package net.porodnov.bank.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.porodnov.bank.entity.dto.CashOrderDto;
 import net.porodnov.bank.entity.enums.ExecutionResult;
 import net.porodnov.bank.entity.enums.OrderType;
 
@@ -25,4 +26,11 @@ public class CashOrder {
     @Enumerated(EnumType.STRING)
     private ExecutionResult executionResult;
     private LocalDate dateCreation;
+
+    public CashOrder() {
+    }
+
+    public CashOrderDto toCashOrderResponseDto() {
+        return new CashOrderDto(orderType, sum, customerAccount, executionResult, dateCreation);
+    }
 }
