@@ -3,6 +3,7 @@ package net.porodnov.bank.service;
 import net.porodnov.bank.entity.Customer;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
+import net.porodnov.bank.entity.dto.CustomerAccountDto;
 import net.porodnov.bank.entity.dto.InterbankTransferDto;
 import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.entity.enums.AccountType;
@@ -12,18 +13,17 @@ import net.porodnov.bank.exception.SecretWordException;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.CustomerRepository;
 import net.porodnov.bank.util.SecretWordResolver;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerAccountService {
+public class CustomerAccountService extends ModelMapper {
     private final CustomerAccountRepository customerAccountRepository;
     private final TransactionService transactionService;
     private final CustomerRepository customerRepository;
@@ -115,6 +115,11 @@ public class CustomerAccountService {
             account.setAccountNumber(UUID.randomUUID().toString());
             account.setSum(Float.valueOf(String.valueOf(Math.round(Math.random() * 1000))));
             customerAccountRepository.save(account);
-        } else throw new EntityNotFoundException("Клиент не найди по id: " + id);
+        } else throw new EntityNotFoundException("createNewCustomerAccountBy: Клиент не найден по id: " + id);
+    }
+
+    public List<CustomerAccountDto> searchCustomerAccountsBy(Long id) {
+        return customerAccountRepository.findCustomerAccountByCustomerId(id).stream()
+                .map(it -> map(it,CustomerAccountDto.class)).collect(Collectors.toList());
     }
 }

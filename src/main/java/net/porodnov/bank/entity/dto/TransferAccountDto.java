@@ -10,7 +10,4 @@ public class TransferAccountDto {
     private String currentAccountNumber;
     private Float sumTransfer;
     private String secretWord;
-
-    public TransferAccountDto() {
-    }
 }

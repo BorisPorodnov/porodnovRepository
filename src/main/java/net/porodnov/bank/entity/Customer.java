@@ -2,7 +2,6 @@ package net.porodnov.bank.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.porodnov.bank.entity.dto.CustomerResponseDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,15 +17,9 @@ public class Customer {
     private Long id;
     private String firstName;
     private String secondName;
-    private String surName;
+    private String surname;
     private String secretWord;
 
     public Customer() {
-    }
-
-    public CustomerResponseDto toCustomerResponseDto() {
-        return new CustomerResponseDto(
-                firstName, secondName, surName, secretWord
-        );
     }
 }

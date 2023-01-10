@@ -9,7 +9,4 @@ import net.porodnov.bank.entity.CustomerAccount;
 public class InterbankTransferDto {
     private CustomerAccount from;
     private CustomerAccount to;
-
-    public InterbankTransferDto() {
-    }
 }

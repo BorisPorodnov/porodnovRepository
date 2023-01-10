@@ -7,6 +7,7 @@ import net.porodnov.bank.entity.dto.CustomerResponseDto;
 import net.porodnov.bank.entity.enums.AccountType;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.CustomerRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,13 +17,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService {
+public class CustomerService extends ModelMapper{
     private final CustomerRepository customerRepository;
     private final CustomerAccountRepository customerAccountRepository;
 
     public CustomerService(CustomerRepository customerRepository,
-                           CustomerAccountRepository customerAccountRepository
-    ) {
+                           CustomerAccountRepository customerAccountRepository) {
         this.customerRepository = customerRepository;
         this.customerAccountRepository = customerAccountRepository;
     }
@@ -33,7 +33,7 @@ public class CustomerService {
 
         customer.setFirstName(dto.getFirstName());
         customer.setSecondName(dto.getSecondName());
-        customer.setSurName(dto.getSurname());
+        customer.setSurname(dto.getSurname());
         customer.setSecretWord(dto.getSecretWord());
 
         account.setAccountNumber(UUID.randomUUID().toString());
@@ -48,16 +48,16 @@ public class CustomerService {
     }
 
     public CustomerResponseDto search(Long id) {
-        Customer customerById = customerRepository.findCustomerById(id);
-        if (customerById != null) {
-            return customerById.toCustomerResponseDto();
+        Customer customer = customerRepository.findCustomerById(id);
+        if (customer != null) {
+            return map(customer, CustomerResponseDto.class);
         }
-        throw new EntityNotFoundException("Клиент не существует под даким id: " + id);
+        throw new EntityNotFoundException("search: Клиент не существует под даким id: " + id);
     }
 
     public List<CustomerResponseDto> findAllCustomers() {
-        return customerRepository.findAll().stream()
-                .map(Customer::toCustomerResponseDto)
-                .collect(Collectors.toList());
+        return customerRepository.findAll().stream().map(
+                it -> map(it, CustomerResponseDto.class)
+        ).collect(Collectors.toList());
     }
 }

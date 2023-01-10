@@ -1,9 +1,9 @@
 package net.porodnov.bank.service;
 
-import net.porodnov.bank.entity.dto.CashOrderDto;
 import net.porodnov.bank.entity.CashOrder;
 import net.porodnov.bank.entity.CustomerAccount;
 import net.porodnov.bank.entity.Transaction;
+import net.porodnov.bank.entity.dto.CashOrderDto;
 import net.porodnov.bank.entity.enums.ExecutionResult;
 import net.porodnov.bank.entity.enums.OrderType;
 import net.porodnov.bank.entity.enums.TransactionType;
@@ -12,15 +12,15 @@ import net.porodnov.bank.repository.CashOrderRepository;
 import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.repository.TransactionRepository;
 import net.porodnov.bank.util.SecretWordResolver;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CashOrderService {
+public class CashOrderService extends ModelMapper {
     private final CustomerAccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
     private final CashOrderRepository cashOrderRepository;
@@ -49,9 +49,7 @@ public class CashOrderService {
                 CustomerAccount account = accountRepository.findCustomerAccountById(it.getId());
                 if (orderDto.getOrderType() == OrderType.WITHDRAWAL) {
                     if (orderDto.getCustomerAccount().getCustomer().getSecretWord()
-                            .equals(
-                                    SecretWordResolver.decrypt(account.getCustomer().getSecretWord())
-                            )
+                            .equals(SecretWordResolver.decrypt(account.getCustomer().getSecretWord()))
                     ) {
                         account.setSum(account.getSum() - orderDto.getSum());
                         accountRepository.save(account);
@@ -111,11 +109,10 @@ public class CashOrderService {
     }
 
     public List<CashOrderDto> getInfoBy(Long id) {
-        List<CashOrder> all = cashOrderRepository.findCashOrderByCustomerAccountId(id);
-        if (all.isEmpty()) {
-            throw new EntityNotFoundException("Кассовый ордер не существует");
-        }
-        return all.stream().map(CashOrder::toCashOrderResponseDto).collect(Collectors.toList());
+        return cashOrderRepository.findCashOrderByCustomerAccountId(id)
+                .stream()
+                .map(it -> map(it, CashOrderDto.class))
+                .collect(Collectors.toList());
     }
 
 }

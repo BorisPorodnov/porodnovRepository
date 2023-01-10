@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CustomerAccountDto {
-    private Long id;
     private Customer customer;
     private String accountNumber;
     private Float sum;
@@ -18,6 +17,17 @@ public class CustomerAccountDto {
     private LocalDateTime openingDate;
     private LocalDateTime validityOfAccount;
 
-    public CustomerAccountDto() {
+    public CustomerAccountDto(Customer customer,
+                              String accountNumber,
+                              Float sum, AccountType accountType,
+                              LocalDateTime openingDate,
+                              LocalDateTime validityOfAccount
+    ) {
+        this.customer = customer;
+        this.accountNumber = accountNumber;
+        this.sum = sum;
+        this.accountType = accountType;
+        this.openingDate = openingDate;
+        this.validityOfAccount = validityOfAccount;
     }
 }
