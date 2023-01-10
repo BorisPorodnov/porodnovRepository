@@ -22,26 +22,22 @@ public class CustomerService extends ModelMapper{
     private final CustomerAccountRepository customerAccountRepository;
 
     public CustomerService(CustomerRepository customerRepository,
-                           CustomerAccountRepository customerAccountRepository) {
+                           CustomerAccountRepository customerAccountRepository
+    ) {
         this.customerRepository = customerRepository;
         this.customerAccountRepository = customerAccountRepository;
     }
 
     public void create(CustomerRequestDto dto) {
-        Customer customer = new Customer();
+        Customer customer = map(dto, Customer.class);
+
         CustomerAccount account = new CustomerAccount();
-
-        customer.setFirstName(dto.getFirstName());
-        customer.setSecondName(dto.getSecondName());
-        customer.setSurname(dto.getSurname());
-        customer.setSecretWord(dto.getSecretWord());
-
         account.setAccountNumber(UUID.randomUUID().toString());
         account.setAccountType(AccountType.CURRENT_ACCOUNT);
         account.setCustomer(customer);
         account.setValidityOfAccount(LocalDateTime.now());
         account.setOpeningDate(LocalDateTime.now());
-        account.setSum(200F);
+        account.setSum(0F);
 
         customerRepository.save(customer);
         customerAccountRepository.save(account);
@@ -56,8 +52,8 @@ public class CustomerService extends ModelMapper{
     }
 
     public List<CustomerResponseDto> findAllCustomers() {
-        return customerRepository.findAll().stream().map(
-                it -> map(it, CustomerResponseDto.class)
-        ).collect(Collectors.toList());
+        return customerRepository.findAll().stream()
+                .map(it -> map(it, CustomerResponseDto.class))
+                .collect(Collectors.toList());
     }
 }

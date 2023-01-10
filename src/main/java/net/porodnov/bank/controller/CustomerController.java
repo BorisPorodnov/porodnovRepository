@@ -3,7 +3,6 @@ package net.porodnov.bank.controller;
 import net.porodnov.bank.aspect.LogExecutionTime;
 import net.porodnov.bank.entity.dto.CustomerRequestDto;
 import net.porodnov.bank.entity.dto.CustomerResponseDto;
-import net.porodnov.bank.repository.CustomerRepository;
 import net.porodnov.bank.service.CustomerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,7 @@ import java.util.List;
 public class CustomerController {
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService,
-                              CustomerRepository customerRepository
+    public CustomerController(CustomerService customerService
     ) {
         this.customerService = customerService;
     }
