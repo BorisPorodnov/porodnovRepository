@@ -14,13 +14,11 @@ import java.util.List;
 @RequestMapping("/api/customer")
 public class CustomerController {
     private final CustomerService customerService;
-    private final CustomerRepository customerRepository;
 
     public CustomerController(CustomerService customerService,
                               CustomerRepository customerRepository
     ) {
         this.customerService = customerService;
-        this.customerRepository = customerRepository;
     }
 
     @LogExecutionTime
