@@ -1,14 +1,9 @@
 package net.porodnov.bank.controller;
 
-import liquibase.pro.packaged.C;
-import net.porodnov.bank.dto.CashOrderDto;
-import net.porodnov.bank.dto.CustomerAccountDto;
-import net.porodnov.bank.dto.InterbankTransferDto;
-import net.porodnov.bank.dto.TransferAccountDto;
-import net.porodnov.bank.entity.CashOrder;
-import net.porodnov.bank.entity.CustomerAccount;
+import net.porodnov.bank.entity.dto.CustomerAccountDto;
+import net.porodnov.bank.entity.dto.InterbankTransferDto;
+import net.porodnov.bank.entity.dto.TransferAccountDto;
 import net.porodnov.bank.exception.SecretWordException;
-import net.porodnov.bank.repository.CustomerAccountRepository;
 import net.porodnov.bank.service.CustomerAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +15,13 @@ import java.util.List;
 @RequestMapping("/api/account")
 public class CustomerAccountController {
     private final CustomerAccountService customerAccountService;
-    private final CustomerAccountRepository customerAccountRepository;
-
-    public CustomerAccountController(CustomerAccountService customerAccountService,
-                                     CustomerAccountRepository customerAccountRepository
-    ) {
+    public CustomerAccountController(CustomerAccountService customerAccountService) {
         this.customerAccountService = customerAccountService;
-        this.customerAccountRepository = customerAccountRepository;
     }
 
     @GetMapping("{id}")
-    ResponseEntity<List<CustomerAccount>> getAccountById(@PathVariable Long id) {
-        return ResponseEntity.ok(customerAccountRepository.findCustomerAccountByCustomerId(id));
+    ResponseEntity<List<CustomerAccountDto>> searchAccountsById(@PathVariable Long id) {
+        return ResponseEntity.ok(customerAccountService.searchCustomerAccountsBy(id));
     }
 
     @PostMapping("/create/{id}")

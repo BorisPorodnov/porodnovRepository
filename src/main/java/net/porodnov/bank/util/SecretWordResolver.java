@@ -8,7 +8,7 @@ import java.util.Base64;
 
 public class SecretWordResolver {
 
-    public String encrypt(String value) {
+    public static String encrypt(String value) {
         String key = "Bar12345Bar12345"; // 128 bit key
         String initVector = "RandomInitVector"; // 16 bytes IV
         try {
